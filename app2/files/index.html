@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Beginnings</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #141b33;
+      --card: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.10);
+      --text: #e8ecf8;
+      --muted: #9aa4c2;
+      --accent: #ef7b4d;
+      --accent2: #5ec4d6;
+      --ok: #3ddc97;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(239, 123, 77, 0.18), transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, rgba(94, 196, 214, 0.16), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px 32px;
+      line-height: 1.6;
+    }
+    main { width: 100%; max-width: 880px; }
+
+    /* Status chips */
+    .status { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px;
+      background: var(--card); border: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); animation: pulse 2s infinite; }
+    .chip strong { color: var(--text); font-weight: 600; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Hero */
+    .eyebrow { color: var(--accent2); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; }
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 4.4rem);
+      line-height: 1.08;
+      margin: 12px 0 20px;
+      letter-spacing: -0.02em;
+    }
+    h1 span {
+      background: linear-gradient(90deg, var(--accent), #f6b26b, var(--accent2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lead { font-size: 1.15rem; color: var(--muted); max-width: 640px; }
+
+    /* Sync loop */
+    .loop {
+      margin: 48px 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+    .node {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px 16px; text-align: center;
+    }
+    .node .icon { font-size: 1.8rem; }
+    .node h3 { font-size: 1rem; margin-top: 6px; }
+    .node p { font-size: 0.85rem; color: var(--muted); }
+    .arrow { color: var(--accent); font-size: 1.4rem; animation: flow 1.6s ease-in-out infinite; }
+    @keyframes flow { 0%,100% { transform: translateX(-3px); opacity: .5; } 50% { transform: translateX(3px); opacity: 1; } }
+
+    /* Learning list */
+    h2 { font-size: 1.4rem; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px;
+      transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: rgba(239, 123, 77, 0.5); }
+    .card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .card p { font-size: 0.9rem; color: var(--muted); }
+
+    .quote {
+      margin: 48px 0 0; padding: 22px 24px;
+      border-left: 3px solid var(--accent);
+      background: var(--card); border-radius: 0 14px 14px 0;
+      color: var(--muted); font-style: italic;
+    }
+
+    footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+    code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 6px; font-size: 0.85em; color: var(--text); }
+
+    @media (max-width: 640px) {
+      .loop { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); justify-self: center; animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="status">
+      <span class="chip"><span class="dot"></span>Sync: <strong>Synced</strong></span>
+      <span class="chip"><span class="dot"></span>Health: <strong>Healthy</strong></span>
+      <!-- Bump this version in Git and watch Argo CD roll it out -->
+      <span class="chip">Version: <strong id="version">v1.0.0</strong></span>
+    </div>
+
+    <p class="eyebrow">Day one</p>
+    <h1>Here's to <span>new beginnings</span></h1>
+    <p class="lead">
+      This little app is my first step into the world of Argo CD &mdash; learning how
+      Git becomes the single source of truth and how a cluster quietly reconciles
+      itself to match.
+    </p>
+
+    <section class="loop" aria-label="GitOps flow">
+      <div class="node"><div class="icon">📝</div><h3>Git</h3><p>Desired state lives here</p></div>
+      <div class="arrow">➜</div>
+      <div class="node"><div class="icon">🔄</div><h3>Argo CD</h3><p>Detects drift &amp; syncs</p></div>
+      <div class="arrow">➜</div>
+      <div class="node"><div class="icon">☸️</div><h3>Cluster</h3><p>Live state, reconciled</p></div>
+    </section>
+
+    <section>
+      <h2>What I'm learning</h2>
+      <div class="grid">
+        <div class="card"><h3>Applications</h3><p>Pointing Argo CD at a repo, path and destination namespace.</p></div>
+        <div class="card"><h3>Sync &amp; self-heal</h3><p>Auto-sync, pruning, and letting the cluster fix its own drift.</p></div>
+        <div class="card"><h3>Health checks</h3><p>Understanding what "Healthy" really means for each resource.</p></div>
+        <div class="card"><h3>Rollbacks</h3><p>Reverting a commit and watching the cluster follow along.</p></div>
+      </div>
+    </section>
+
+    <p class="quote">Every expert was once a beginner. Commit, push, sync &mdash; repeat.</p>
+
+    <footer>
+      Deployed the GitOps way 🚀 &middot; Edit <code>index.html</code>, push, and watch it change.
+    </footer>
+  </main>
+</body>
+</html>

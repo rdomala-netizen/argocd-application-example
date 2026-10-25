@@ -1,0 +1,22 @@
+app:
+  namespace: app2-ns
+ 
+image:
+  repository: nginx
+  tag: "1.25"
+ 
+replicaCount: 1
+ 
+service:
+  type: ClusterIP
+  port: 80          # port the Service listens on
+  targetPort: 80    # port the container listens on (nginx = 80)
+ 
+ingress:
+  enabled: true
+  className: traefik        # must match an IngressClass in the cluster (Traefik creates "traefik")
+  annotations: {}           # e.g. traefik.ingress.kubernetes.io/router.entrypoints: web
+  host: app2.localhost      # *.localhost resolves to 127.0.0.1, handy on kind
+  path: /
+  pathType: Prefix
+ 
